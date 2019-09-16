@@ -25,7 +25,7 @@ export default {
       }//不能重复点击，如果不为空证明点过了
       this.a = true;
       this.b=this.n %2==0?'x':'O';//奇数为O，偶数为X；
-      this.$emit('click')
+      this.$emit('click',this.b)
     }
   }
 

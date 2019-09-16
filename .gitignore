@@ -1,0 +1,6 @@
+
+.DS_Store
+.idea/modules.xml
+*.xml
+.idea/gamedemo.iml
+node_modules/
