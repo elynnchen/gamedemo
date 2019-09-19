@@ -1,9 +1,8 @@
 <template>
-  <div id="app" >
+  <div>
  <!--  {{n}}-->
     <div class="cell" @click="onClickMe"  :class="{ active: isActive }">
-    <div v-if="a"> {{b}}</div>
-    <div v-else></div>
+    <div v-if="isture"> {{chess}}</div>
     </div>
  
   </div>
@@ -13,19 +12,21 @@
 
 export default {
   name: 'app',
-  props:["n"],
+  props:{
+      n: Number
+  },
   data(){
-    return{a:false , b:"",isActive:false}
+    return{isture:false , chess:"",isActive:false}
   },
  
   methods:{
     onClickMe(){
-      if(this.b!==""){
+      if(this.chess!==""){
         return
       }//不能重复点击，如果不为空证明点过了
-      this.a = true;
-      this.b=this.n %2==0?'x':'O';//奇数为O，偶数为X；
-      this.$emit('click',this.b)
+      this.isture = true;
+      this.chess=this.n %2===0?'x':'O';//奇数为O，偶数为X；
+      this.$emit('click',this.chess)
     }
   }
 
@@ -37,6 +38,7 @@ export default {
   border:1px solid #333;
   width:100px;
   height:100px;
+  display: inline-block;
   text-align: center;
  line-height: 100px;
   justify-content: center;
@@ -45,5 +47,5 @@ export default {
     float:left;
   margin:-1px 0 0 -1px;
 }
- .active{background:#ccc }
+ .active .cell{background:#ccc }
 </style>

@@ -1,10 +1,10 @@
 <template>
 <div>
-  {{n}}
+ 这是第 {{n}}个点击
   <div class="row">
-     <Cell v-on:click="onClickCell(0,$event)" v-bind:n='n'></Cell>
-     <Cell v-on:click="onClickCell(1,$event)" v-bind:n='n' ></Cell>
-     <Cell v-on:click="onClickCell(2,$event)" v-bind:n='n' ></Cell>
+     <Cell  v-on:click="onClickCell(0,$event)" v-bind:n='n'></Cell>
+     <Cell  v-on:click="onClickCell(1,$event)" v-bind:n='n' ></Cell>
+     <Cell  v-on:click="onClickCell(2,$event)" v-bind:n='n' ></Cell>
   </div>
   <div class="row">
      <Cell @click="onClickCell(3,$event)" :n='n'></Cell>
@@ -12,12 +12,12 @@
      <Cell @click="onClickCell(5,$event)" :n='n'></Cell>
   </div>
   <div class="row">
-     <Cell @click="onClickCell(6,$event)" :n='n'></Cell>
-     <Cell @click="onClickCell(7,$event)" :n='n'></Cell>
-     <Cell @click="onClickCell(8,$event)" :n='n'></Cell>
+     <Cell  @click="onClickCell(6,$event)" :n='n'></Cell>
+     <Cell  @click="onClickCell(7,$event)" :n='n'></Cell>
+     <Cell  @click="onClickCell(8,$event)" :n='n'></Cell>
   </div>
     <div>
-        <button @click="onClickClear()">清除</button>
+        <button @click="onClickClear()">再来一次</button>
     </div>
 <div>{{map}}</div>
 <div>{{result}}</div>
@@ -34,37 +34,16 @@ export default {
     return{
       n:0,
       result:false,
+      isactive:false,
       map:[
-        [null,null,null],
-        [null,null,null],
-        [null,null,null]]
+        ["","",""],
+        ["","",""],
+        ["","",""]],
+
       }
   },
   methods:{
-      onClickClear() {
-          // location.reload()
-          /*   this.$nextTick(function () {
-                 console.log("1111111");
-                 for(let i=0;i<=2;i++){
-                     for(let j=0;j<=2;j++){
-                         // 更新数据
-                         this.$set(this.map[i], j, null);
-                     }
-                 }
-             });*/
-          for(let i=0;i<=2;i++){
-              for(let j=0;j<=2;j++){
-                  //this.$refs.child.$data.b=null;
-                  //this.$children[i]=null;
-               // this.$set(this.map[i], j,this.$refs.child.$data.b )
-                  for(let i=0;i<this.$children.length;i++){
-                      console.log(this.$children[i].$data.b);
-                      this.$children[i].$data.b="";
-                  }
-                  this.$set(this.map[i], j,this.$children[i].$data.b )
-              }
-          }
-      },
+
     onClickCell(i, b){//i表示序号，被点击，但不知道是X还是O，子组件需Emit内容出来
         console.log(`${i}被点击,内容是${b}`);
         this.map[Math.floor(i/3)][i%3]=b;
@@ -73,11 +52,18 @@ export default {
   },
       tell(){
           let map=this.map;
-          for(let i=0; i<2;i++){
+          for(let i=0; i<=2;i++){
               if( map[i][0]!==null && map[i][0]!=="" &&
                   map[i][0]===map[i][1] &&
                   map[i][1]===map[i][2]){
                   this.result=true;
+
+                  console.log( this.map[i][0]);
+
+                 // this.$refs.c0.$data.isActive=true;
+
+
+
               }
           }
           for(let j=0; j<2;j++){
@@ -106,6 +92,17 @@ export default {
               }
           }
       },
+      onClickClear() {
+          for(let i=0;i<=2;i++){
+              for(let j=0;j<=2;j++){
+                  for(let i=0;i<this.$children.length;i++){
+                      console.log(this.$children[i].$data.b);
+                      this.$children[i].$data.b="";
+                  }
+                  this.$set(this.map[i], j,this.$children[i].$data.b )
+              }
+          }
+      },
   }
 }
 </script>
@@ -115,4 +112,7 @@ export default {
   display:flex;
 
 }
+ .active{
+      background: #ccc;
+    }
 </style>

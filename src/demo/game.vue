@@ -3,8 +3,8 @@
         {{n}}
         <div class="row">
             <Cell v-on:click="onClickCell(0,$event)" v-bind:n='n'></Cell>
-            <Cell v-on:click="onClickCell(1,$event)" v-bind:n='n'></Cell>
-            <Cell v-on:click="onClickCell(2,$event)" v-bind:n='n'></Cell>
+            <Cell v-on:click="onClickCell(1,$event)" v-bind:n='n' ></Cell>
+            <Cell v-on:click="onClickCell(2,$event)" v-bind:n='n' ></Cell>
         </div>
         <div class="row">
             <Cell @click="onClickCell(3,$event)" :n='n'></Cell>
@@ -15,6 +15,9 @@
             <Cell @click="onClickCell(6,$event)" :n='n'></Cell>
             <Cell @click="onClickCell(7,$event)" :n='n'></Cell>
             <Cell @click="onClickCell(8,$event)" :n='n'></Cell>
+        </div>
+        <div>
+            <button @click="onClickClear()">再来一次</button>
         </div>
         <div>{{map}}</div>
         <div>{{result}}</div>
@@ -38,6 +41,30 @@
             }
         },
         methods:{
+            onClickClear() {
+                // location.reload()
+                /*   this.$nextTick(function () {
+                       console.log("1111111");
+                       for(let i=0;i<=2;i++){
+                           for(let j=0;j<=2;j++){
+                               // 更新数据
+                               this.$set(this.map[i], j, null);
+                           }
+                       }
+                   });*/
+                for(let i=0;i<=2;i++){
+                    for(let j=0;j<=2;j++){
+                        //this.$refs.child.$data.b=null;
+                        //this.$children[i]=null;
+                        // this.$set(this.map[i], j,this.$refs.child.$data.b )
+                        for(let i=0;i<this.$children.length;i++){
+                            console.log(this.$children[i].$data.b);
+                            this.$children[i].$data.b="";
+                        }
+                        this.$set(this.map[i], j,this.$children[i].$data.b )
+                    }
+                }
+            },
             onClickCell(i, b){//i表示序号，被点击，但不知道是X还是O，子组件需Emit内容出来
                 console.log(`${i}被点击,内容是${b}`);
                 this.map[Math.floor(i/3)][i%3]=b;
@@ -47,7 +74,7 @@
             tell(){
                 let map=this.map;
                 for(let i=0; i<2;i++){
-                    if( map[i][0]!==null &&
+                    if( map[i][0]!==null && map[i][0]!=="" &&
                         map[i][0]===map[i][1] &&
                         map[i][1]===map[i][2]){
                         this.result=true;
@@ -55,7 +82,7 @@
                 }
                 for(let j=0; j<2;j++){
                     if(
-                        map[0][j]!==null&&
+                        map[0][j]!==null&&map[0][j]!==""&&
                         map[0][j]===map[1][j]&&
                         map[1][j]===map[2][j]){
                         this.result=true;
@@ -63,7 +90,7 @@
                 }
                 for(let i=0; i<2;i++){
                     if(
-                        map[i][i]!==null&&
+                        map[i][i]!==null&&map[i][i]!==""&&
                         map[0][0]===map[1][1]&&
                         map[1][1]===map[2][2]){
                         this.result=true;
@@ -72,7 +99,7 @@
                 }
                 for(let i=0; i<2;i++){
                     if(
-                        map[0][2]!==null&&
+                        map[0][2]!==null&&map[0][2]!==""&&
                         map[0][2]===map[1][1]&&
                         map[1][1]===map[2][0]){
                         this.result=true;

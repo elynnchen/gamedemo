@@ -2,9 +2,12 @@
     <div id="app" class="wgdesign">
         <div class="wgdesign-aside">
             <h1></h1>
-            <div>
-            <router-link to="/game">小游戏</router-link>
-            </div>
+            <ul>
+                <li> <router-link to="/game">小游戏</router-link></li>
+                <li><router-link to="/gameVfor">小游戏v-for</router-link></li>
+
+
+            </ul>
 
         </div>
         <div class="wgdesign-main">
