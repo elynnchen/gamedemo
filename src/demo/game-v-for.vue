@@ -11,11 +11,17 @@
            ref="index"
      ></cell>
   </div>
-
     <div class="option">
         <button @click="onClickClear()">再来一次</button>
         <div>{{map}}</div>
         <div>{{result}}</div>
+    </div>
+    <div class="popox" v-if="result">
+        <div>win</div>
+        <p>恭喜{{value}}胜利</p>
+    </div>
+    <div v-if="gameOver">
+        <p>gameover</p>
     </div>
 
 </div>
@@ -31,6 +37,7 @@ export default {
     return{
       n:0,
       result:false,
+      gameOver:false,
       isactive:false,
         value: String,
       map:[
@@ -39,6 +46,7 @@ export default {
         ["","",""]],
       winCells:[]
       }
+
   },
     mounted(){
 
@@ -46,10 +54,16 @@ export default {
   methods:{
     onClickCell(index, chess){//i表示序号，被点击，但不知道是X还是O，子组件需Emit内容出来
         console.log(`${index}被点击,内容是${chess}`);
-        //this.$refs[i].$data.isActive=true;
         this.map[Math.floor(index/3)][index%3]=chess;
         this.n=this.n+1;
-        this.tell();
+        //判断胜利
+        this.win();
+        //判断GameOVER
+        console.log("第"+this.n+"被点击");
+        if(this.n===9 && this.result===false){
+            this.gameOver=true;
+
+        }
         // if(this.result) {
         //     console.log(this.$refs.index);
         //     var rcells = [];
@@ -67,14 +81,14 @@ export default {
         // }
   },
       //当数字连线成功，将当前Dom格子加上样式
-      cellClasses(index) {
+    cellClasses(index) {
         return {"active": this.winCells.indexOf(index) >= 0};
       },
       //将二维数组转换成一维标记
       getIndex(i, j) {
         return i+j*3;//转换公式
       },
-      tell(){
+      win(){
           let map=this.map;
           for(let i=0; i<=2;i++){
               if( map[i][0]!==null && map[i][0]!=="" &&
@@ -130,6 +144,20 @@ export default {
 
               }
           }
+
+          //判断GameOver
+ /*         for(let i=0; i<=2;i++){//将获取赢方二维数对应格子序号
+              for(let j=0; j<=2;j++){
+
+              this.getIndex(j,i);
+                  console.log("cellsNum长度", this.getIndex(j,i));
+              }
+              this.cellsNum.push();
+              console.log("cellsNum长度",this.cellsNum.length);
+          }*/
+
+
+
       },
       onClickClear() {
           this.n=0;

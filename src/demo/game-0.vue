@@ -57,9 +57,7 @@ export default {
                   map[i][0]===map[i][1] &&
                   map[i][1]===map[i][2]){
                   this.result=true;
-
                   console.log( this.map[i][0]);
-
                  // this.$refs.c0.$data.isActive=true;
 
 

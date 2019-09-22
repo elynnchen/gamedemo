@@ -5,8 +5,6 @@
             <ul>
                 <li> <router-link to="/game">小游戏</router-link></li>
                 <li><router-link to="/gameVfor">小游戏v-for</router-link></li>
-
-
             </ul>
 
         </div>
