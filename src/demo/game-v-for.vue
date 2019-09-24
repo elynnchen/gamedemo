@@ -62,6 +62,7 @@ export default {
         console.log("第"+this.n+"被点击");
         if(this.n===9 && this.result===false){
             this.gameOver=true;
+            this.n=0;
 
         }
         // if(this.result) {
