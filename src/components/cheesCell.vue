@@ -1,5 +1,5 @@
 <template>
-        <li @click="onClickMe"  :class="{ active: isActive }">
+        <li @click="onClickMe"  >
             <div :class="chess" v-if="isture"></div>
         </li>
 </template>
@@ -11,7 +11,7 @@ export default {
       n: Number
   },
   data(){
-    return{isture:false , chess:"",isActive:false}
+    return{isture:false , chess:""}
   },
  
   methods:{
@@ -29,8 +29,6 @@ export default {
 </script>
 
 <style scoped>
-    .active{
-        background: rgba(255, 255, 255, 0.9);
-    }
+
 
 </style>

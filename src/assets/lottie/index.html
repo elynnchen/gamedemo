@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,maximum-scale=1">
+	<title>H5 Lottie矢量</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		body,
+		html {
+			width: 100%;
+			height: 100%;
+		}
+
+		.testCSS {
+			width: 50px;
+			height: 50px;
+			background-color: blue;
+			position: absolute;
+			top: 0;
+			left: 0;
+			display: none;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="testCSS"></div>
+	<div style="width:100%;height:100%;background-color:#333" id="bodymovin"></div>
+
+	<!-- json数据 -->
+	<script src="lottie_end.js"></script>
+
+	<!-- lottie库 -->
+	<script src="lottie.min.js"></script>
+	<script>
+
+		var anim = document.getElementById('bodymovin');
+		var animationView = lottie.loadAnimation({
+			container: document.getElementById('bodymovin'),
+			renderer: 'svg',
+			loop: true,
+			autoplay: true,
+			animationData: JSON.parse(jsonFile)
+		});
+	</script>
+
+</body>
+
+</html>
