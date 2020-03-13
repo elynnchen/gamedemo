@@ -8,7 +8,7 @@
 export default {
   name: 'cell01',
   data(){
-    return{isture:false ,}
+    return{isture:false}
   },
  
   methods:{

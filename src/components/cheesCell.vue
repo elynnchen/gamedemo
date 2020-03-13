@@ -1,6 +1,8 @@
 <template>
         <li @click="onClickMe"  >
-            <div :class="chess" v-if="isture"></div>
+            <transition>
+                 <div :class="chess" v-if="isture"></div>
+            </transition>
         </li>
 </template>
 
@@ -29,6 +31,12 @@ export default {
 </script>
 
 <style scoped>
-
-
+    .v-enter, .v-leave-to {
+        opacity: 0;
+        transform: scale(0);
+    }
+    .v-enter-to, .v-leave{ opacity: 1; transform: scale(1);}
+    .v-enter-active, .v-leave-active {
+        transition: all .2s;
+    }
 </style>

@@ -1,34 +1,135 @@
 <template>
     <div class="we-popover-group"  ref="popover">
-    <!--@click="onclick"-->
-    <div ref="popcontwarp"
-         class="we-popover"
-         :class="{[`we-popover--${position}`]:true}"
-         v-if="visible">
-        <div class="we-popover-cont">
-            <slot name="content" ></slot></div>
+        <!--@click="onclick"-->
+        <div ref="popcontwarp" class="we-popover" :class="{[`we-popover--${position}`]:true}" v-if="visible">
+            <div class="we-popover-cont">
+                <slot name="content" ></slot></div>
+        </div>
+        <div ref="anthor">
+            <slot></slot>
+        </div>
     </div>
-    <div ref="anthor">
-        <slot></slot></div>
-</div>
 </template>
 
 <script>
-export default {
-    name: 'WePopover',
-    data(){
-        return{
-            visible:true,
+    export default {
+        name:"WePopover",
+        data(){
+            return{
+                visible:false,
+            }
+        },
+
+        props:{
+            position:{
+                type:String,
+                default:'top-left',
+                validator(value){
+                    return['top-left','top-center','top-right',
+                        'bottom-left','bottom-center','bottom-right',
+                        'left-top','left-center','left-bottom',
+                        'right-top','right-center','right-bottom'].indexOf(value)>=0
+                }
+            },
+            trigger:{
+                type:String,
+                default:'click',
+                validator(value){
+                    return['click','hover'].indexOf(value)>=0
+                }
+            }
         }
-    },
-    props:{
+        ,
 
+        mounted () {
+            if(this.trigger ==='click'){
+                this.$refs.popover.addEventListener('click',this.onClick);
+                console.log("click点击后执行");
+
+            }else {
+                this.$refs.popover.addEventListener('mouseenter',this.open);
+                console.log("mouseenter后执行open");
+                this.$refs.popover.addEventListener('mouseleave',this.close);
+                console.log("mouseleave后执行close");
+            }
+        },
+        destroyed(){
+            if(this.trigger==='click'){
+                this.$refs.popover.removeEventListener('click',this.onClick);
+            }else {
+                this.$refs.popover.removeEventListener('mouseenter',this.open);
+                this.$refs.popover.removeEventListener('mouseleave',this.close);
+            }
+        },
+
+
+        methods:{
+            onClick(event){
+                if(this.$refs.anthor.contains(event.target)){
+                    console.log('获取点击焦点事件');
+                    if(this.visible===true){
+                        console.log('如果Visible=true执行关闭')
+                        this.close();
+                        console.log('已关闭')
+                    }
+                    else {
+                        this.open();
+                        console.log('执行打开tips')
+                    }
+                }
+            },
+            open(){// 打开Tips
+                this.visible=true;
+                console.log('this.visible=true Tips开');
+                this.$nextTick(()=>{
+                    this.positionTips();//显示到目标位置
+                    console.log('将Tips显示到位置上');
+                    document.addEventListener('click', this.onclickDocument);//添加监听事件
+                    console.log('再次监听文档事件')
+                })
+            },
+            close(){
+                console.log('执行关闭');
+                this.visible=false;
+                console.log('关');
+                document.removeEventListener('click', this.onclickDocument);
+            },
+
+            positionTips(){//定位位置
+                document.body.appendChild(this.$refs.popcontwarp);
+                let{width,height,top,left}=this.$refs.anthor.getBoundingClientRect();//获取按钮坐标位置
+                if(this.position==='top-left') {
+                    this.$refs.popcontwarp.style.left = left + window.scrollX + 'px';
+                    this.$refs.popcontwarp.style.top = top + window.scrollY + 'px';
+
+                }
+                else if(this.position==='bottom-left'){
+                    this.$refs.popcontwarp.style.left=left + window.scrollX+'px';
+                    this.$refs.popcontwarp.style.top=top+height+ window.scrollY+'px'
+                }
+                else if(this.position==='left-top'){
+                    this.$refs.popcontwarp.style.left=left + window.scrollX+'px'
+                    let {height:popheight} =this.$refs.popcontwarp.getBoundingClientRect();
+                    this.$refs.popcontwarp.style.top=top+ window.scrollY-(popheight-height)/2+'px'
+                }
+                else if(this.position==='right-top'){
+                    this.$refs.popcontwarp.style.left=left + width+ window.scrollX+'px';
+                    let {height:popheight} =this.$refs.popcontwarp.getBoundingClientRect();
+                    this.$refs.popcontwarp.style.top=top+ window.scrollY-(popheight-height)/2+'px'
+                }
+            }
+            ,
+            onclickDocument(e){// 监听文档事件
+                if(this.$refs.popover&&(this.$refs.popover===e.target || this.$refs.popover.contains(e.target))){return}
+                if(this.$refs.popcontwarp&&(this.$refs.popcontwarp===e.target || this.$refs.popcontwarp.contains(e.target))){return}
+                console.log('如果点击是Popover外面或Popcontent则不执行关闭')
+                this.close()
+            }
+        }
     }
-
-}
 </script>
-<style>
-    .we-popover-group{position:relative;margin-top:100px;}
+<style scoped>
+    .we-popover-group{position:relative;margin:30px 0;}
     .we-popover {
         position: absolute;
         padding: 10px 15px 10px 15px;

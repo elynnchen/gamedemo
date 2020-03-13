@@ -1,6 +1,6 @@
 <template>
-    <div class="we-popover-group" @click.stop="handleclick">
-    <div class="we-popover" v-if="visible">
+    <div class="we-popover-group" @click="handleclick">
+    <div class="we-popover" v-if="visible" >
         <div class="we-popover-cont">
             <slot name="content"></slot>
         </div>
@@ -22,35 +22,32 @@ export default {
     methods:{
         handleclick(){
             this.visible=!this.visible;
-            console.log("切换"+this.visible);
+            console.log("切换v"+this.visible);
             if(this.visible === true){
-             setTimeout(()=>{
-                 var event=()=>{
-                     this.visible=false;
-                     document.body.removeEventListener('click',event);
-                     console.log("关闭监听器，当前弹窗"+this.visible);
-                 };
-                     document.body.addEventListener('click',event);
-                    console.log("添加监听器，当前弹窗"+this.visible);
-             })
-                /*   document.body.addEventListener('click', () => {
+
+
+                /*//添加监听事件
+                 document.body.addEventListener('click', () => {
                  this.visible = false;
-                 console.log("点击Body切换"+this.visible);
-             });*/
-                /*  this.nextTick (() => {
-                        this.visible=false;
-                        document.body.removeEventListener('click',event);
-                        console.log("关闭监听器"+this.visible);
-                    };
-                        document.body.addEventListener('click',event);
-                       console.log("添加监听器"+this.visible);
-                   })*/
+                 console.log("点击Body切换"+this.visible);});*/
+
+            setTimeout(()=>{
+             var event=()=>{
+                 this.visible=false;
+                 document.body.removeEventListener('click',event);
+                 console.log("关闭监听器，当前弹窗"+this.visible);
+             };
+                 document.body.addEventListener('click',event);
+                console.log("添加监听器，当前弹窗"+this.visible);
+         })
+
+
             }
         }
     }
 }
 </script>
-<style>
+<style scoped>
     *{margin: 0; padding:0;}
     .we-popover-group{position:relative;margin-top:100px;}
     .we-popover {

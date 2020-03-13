@@ -9,22 +9,12 @@
                    :class="cellClasses(index)"
                    @click="onClickCell(index,$event)"
                    :n='num'
-                   ref="index"
-            ></cells>
-       <!-- <li><div class=""></div></li>
-            <li><div class="chess-B"></div></li>
-            <li><div class="chess-A"></div></li>
-            <li><div class="chess-B"></div></li>
-            <li><div class="chess-A"></div></li>
-            <li><div class="chess-B"></div></li>
-            <li><div class="chess-A"></div></li>
-            <li><div class="chess-B"></div></li>
-            <li><div class="chess-A"></div></li>-->
+                   ref="index"></cells>
+
         </ul>
         </div>
         <button class="btn-again" @click="onClickClear()"></button>
         <transition name="fade" >
-
         <div class="win"  v-show="result"  >
             <div id="lottiewin"  class="lottie"></div>
         </div>

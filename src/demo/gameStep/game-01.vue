@@ -3,7 +3,15 @@
     <div class="cont">
         <div class="chess-box">
         <ul >
-        <cell></cell>
+            <cell></cell>
+            <cell></cell>
+            <cell></cell>
+            <cell></cell>
+            <cell></cell>
+            <cell></cell>
+            <cell></cell>
+            <cell></cell>
+            <cell></cell>
         </ul>
         </div>
     </div>

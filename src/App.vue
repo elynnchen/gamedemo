@@ -6,7 +6,6 @@
             <ul>
                 <router-link to="/begain"  tag="li">首页</router-link>
                 <router-link to="/game" tag="li">小游戏</router-link>
-
             </ul>
              <button type="button" @click="handleRouter">个人中心</button>
             </nav>

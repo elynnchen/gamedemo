@@ -1,5 +1,6 @@
 <template>
     <div class="begain">
+        <img src="../assets/index.jpg" alt="" width="100%">
         <div class="option">
         <we-button btn-style="primary" btn-size="l" @click="handleClick">开始</we-button>
         </div>
@@ -22,7 +23,7 @@
     .begain{
         width:100%;
         height: 100%;
-        background:url("../assets/index.jpg");
+
         background-size: cover;
         position: relative;
 
